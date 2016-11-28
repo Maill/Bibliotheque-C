@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1480337842 source:c:\users\ncornu\documents\codeblocks projects\bibliotheque c\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"init.h"
+
+1480337800 source:c:\users\ncornu\documents\codeblocks projects\bibliotheque c\gestfile.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"init.h"
+
+1480337559 c:\users\ncornu\documents\codeblocks projects\bibliotheque c\init.h
+
+1480337366 source:c:\users\ncornu\documents\codeblocks projects\bibliotheque c\gestbib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"init.h"
+
