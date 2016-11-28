@@ -21,7 +21,7 @@ void LoadFile(Program* startup){
     printf("Nom du fichier : ");
     scanf("%s", fileName);
     strcat(fileName, ".dico");
-    FILE* f = fopen(fileName, "r+");
+    FILE* f = fopen(fileName, "a+");
     if(f == NULL){
         if(startup->f != NULL){
             system("cls");

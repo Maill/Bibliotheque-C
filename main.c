@@ -33,7 +33,7 @@ int main()
                 FileMenu(startup);
                 break;
             case 2:
-                //DicoMenu(startup);
+                DicoMenu(startup);
                 break;
             case 3:
                 //CleanDico(startup);
@@ -62,7 +62,7 @@ void FileMenu(Program* startup){
     }
 }
 
-/*void DicoMenu(Program* startup){
+void DicoMenu(Program* startup){
     if(startup->f == NULL){
         system("cls");
         printf("/!\\ : Aucun fichier dictionnaire charge, veuillez charger un fichier dictionnaire !\n\n");
@@ -78,7 +78,7 @@ void FileMenu(Program* startup){
             FillDico(startup);
             break;
         case 2:
-            SearchWord(startup);
+            //SearchWord(startup);
             break;
     }
-}*/
+}

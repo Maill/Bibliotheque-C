@@ -22,12 +22,13 @@ typedef struct Program Program;
 
 //Protorypes main.c
 void FileMenu(Program*);
-void LoadFile(Program*);
+void DicoMenu(Program*);
 
 //Prototypes gestBib.c
 //  - Load Lib
 void InitLibrary(Program*);
 void FillDicoFromFile(Program*);
+void FillDico(Program*);
 //  - Lib's operations
 void CountTotalWords(Program*);
 void ToLowerCase(char*);
@@ -35,5 +36,6 @@ void SortDico(Program*, int);
 
 //Prototypes gestFile.c
 void CreateFile(Program*);
+void LoadFile(Program*);
 
 #endif // INIT_H_INCLUDED

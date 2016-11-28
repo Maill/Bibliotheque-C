@@ -49,6 +49,35 @@ void FillDicoFromFile(Program* startup){
     rewind(startup->f);
 }
 
+//Remplit le tableau via la saisie utilisateur
+void FillDico(Program* startup){
+    char* wordIns = malloc(sizeof(char) * 30);
+    system("cls");
+    printf("           ------- Dictionnaire C -------\n------- Gestion des fichiers dictionnaire -------\n     ------- Inserer un mot dans le dictionnaire -------\n\n");
+    printf("Mot a inserer : ");
+    scanf("%s", wordIns);
+    ToLowerCase(wordIns);
+    int indexLib = wordIns[0] - 97;
+    int sizeLib = startup->dictionary[indexLib].size;
+    startup->dictionary[indexLib].words[sizeLib] = wordIns;
+    startup->dictionary[indexLib].size++;
+    CountTotalWords(startup);
+    SortDico(startup, indexLib);
+    fclose(startup->f);
+    fopen(startup->loadedFileName, "w+");
+    int i;
+    for(i = 0; i < 26; i++){
+        int j;
+        for(j = 0; j < startup->dictionary[i].size; j++){
+            fprintf(startup->f, "%s\n", startup->dictionary[i].words[j]);
+        }
+    }
+    fclose(startup->f);
+    fopen(startup->loadedFileName, "a+");
+    rewind(startup->f);
+    free(wordIns);
+}
+
 //Transforme les majuscules en minuscules
 void ToLowerCase(char* word){
     int i;
