@@ -12,7 +12,7 @@ typedef struct Library Lib;
 
 
 struct Program {
-	char* loadedFileName[100];
+	char* loadedFileName;
 	FILE* f;
 	Lib* dictionary;
 	int totalWords;
@@ -27,6 +27,11 @@ void LoadFile(Program*);
 //Prototypes gestBib.c
 //  - Load Lib
 void InitLibrary(Program*);
+void FillDicoFromFile(Program*);
+//  - Lib's operations
+void CountTotalWords(Program*);
+void ToLowerCase(char*);
+void SortDico(Program*, int);
 
 //Prototypes gestFile.c
 void CreateFile(Program*);

@@ -6,7 +6,7 @@
 
 Program* InitMain() {
 	Program* startup = malloc(sizeof(Lib) * 1);
-	*startup->loadedFileName = NULL;
+	startup->loadedFileName = NULL;
 	startup->f = NULL;
 	startup->totalWords = 0;
 	return startup;
@@ -20,7 +20,7 @@ int main()
         int choice;
         printf("------- Dictionnaire C -------\n\n");
         printf("Fichier charge : ");
-        if (*startup->loadedFileName == NULL) {
+        if (startup->loadedFileName == NULL) {
             printf("Aucun fichier charge\n");
         }else {
             printf("%s\n", (char*)startup->loadedFileName);
