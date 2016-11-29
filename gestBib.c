@@ -37,7 +37,11 @@ void SortDico(Program* startup, int indexLib){
 
 //Remplit le tableau lors de l'initialisation d'un fichier
 void FillDicoFromFile(Program* startup){
-    while((!feof(startup->f) && !ferror(startup->f))){
+    if(IsFileEmpty(startup->f) == 1){
+        CountTotalWords(startup);
+        return;
+    }
+    while(!feof(startup->f) && !ferror(startup->f)){
         char* word = malloc(sizeof(char) * 30);
         fscanf(startup->f, "%s", word);
         ToLowerCase(word);
@@ -123,11 +127,13 @@ void WriteOnFile(Program* startup){
     fclose(startup->f);
     fopen(startup->loadedFileName, "w+");
     int i;
+    int first = 0;
     for(i = 0; i < 26; i++){
         int j;
         for(j = 0; j < startup->dictionary[i].size; j++){
-            if(i == 0 && j == 0){
+            if(first == 0){
                 fprintf(startup->f, "%s", startup->dictionary[i].words[j]);
+                first = 1;
                 continue;
             }
             fprintf(startup->f, "\n%s", startup->dictionary[i].words[j]);

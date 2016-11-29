@@ -54,7 +54,7 @@ void FileMenu(Program* startup){
             LoadFile(startup);
             break;
         case 3:
-            //DeleteFile(startup);
+            DeleteFile(startup);
             break;
     }
 }

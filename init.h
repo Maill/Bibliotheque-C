@@ -44,5 +44,7 @@ void SearchWord(Program*);
 //Prototypes gestFile.c
 void CreateFile(Program*);
 void LoadFile(Program*);
+void DeleteFile(Program*);
+int IsFileEmpty(FILE*);
 
 #endif // INIT_H_INCLUDED
