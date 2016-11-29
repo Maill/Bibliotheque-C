@@ -147,3 +147,21 @@ int CheckIfExists(Program* startup, int indexLib, char* wordToCheck){
     }
     return 0;
 }
+
+void SearchWord(Program* startup){
+    char* wordSearch = malloc(sizeof(char) * 30);
+    system("cls");
+    printf("           ------- Dictionnaire C -------\n------- Gestion des fichiers dictionnaire -------\n     ------- Rechercher un mot dans le dictionnaire -------\n\n");
+    printf("Mot a rechercher : ");
+    scanf("%s", wordSearch);
+    ToLowerCase(wordSearch);
+    int indexLib = wordSearch[0] - 97;
+    if(CheckIfExists(startup, indexLib, wordSearch) == 1){
+        system("cls");
+        printf("-- Le mot \"%s\" est dans le dictionnaire. --\n\n", wordSearch);
+    }else{
+        system("cls");
+        printf("-- Le mot \"%s\" n'existe pas dans le dictionnaire. --\n\n", wordSearch);
+    }
+    free(wordSearch);
+}

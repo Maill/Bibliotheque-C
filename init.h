@@ -39,6 +39,7 @@ int CheckIfExists(Program*, int, char*);
 void WriteOnFile(Program*);
 void OverrideCapacity(Program*, int);
 void CleanDico(Program*);
+void SearchWord(Program*);
 
 //Prototypes gestFile.c
 void CreateFile(Program*);

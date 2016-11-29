@@ -75,7 +75,7 @@ void DicoMenu(Program* startup){
             FillDico(startup);
             break;
         case 2:
-            //SearchWord(startup);
+            SearchWord(startup);
             break;
     }
 }
