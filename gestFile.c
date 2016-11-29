@@ -4,6 +4,7 @@
 #include "init.h"
 
 void CreateFile(Program* startup){
+    startup->loadedFileName = malloc(sizeof(char) * 100);
     system("cls");
     printf("           ------- Dictionnaire C -------\n------- Gestion des fichiers dictionnaire -------\n      ------- Creer un dictionnaire -------\n\n");
     printf("Nom du fichier : ");
@@ -21,7 +22,7 @@ void LoadFile(Program* startup){
     printf("Nom du fichier : ");
     scanf("%s", fileName);
     strcat(fileName, ".dico");
-    FILE* f = fopen(fileName, "a+");
+    FILE* f = fopen(fileName, "r+");
     if(f == NULL){
         if(startup->f != NULL){
             system("cls");
@@ -37,7 +38,7 @@ void LoadFile(Program* startup){
     startup->loadedFileName = fileName;
     startup->f = fopen(startup->loadedFileName, "a+");
     rewind(startup->f);
-    //CleanDico(startup);
+    CleanDico(startup);
     FillDicoFromFile(startup);
     system("cls");
 }

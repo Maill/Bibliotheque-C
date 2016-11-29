@@ -26,7 +26,7 @@ int main()
             printf("%s\n", (char*)startup->loadedFileName);
         }
         printf("Nombre total de mots : %i\n\n", startup->totalWords);
-        printf("1. Fichier du dictionnaire\n2. Gestion du dictionnaire\n3. DEBUG : Vider la memoire\nChoix : ");
+        printf("1. Fichier du dictionnaire\n2. Gestion du dictionnaire\nChoix : ");
         scanf("%i", &choice);
         switch(choice){
             case 1:
@@ -34,9 +34,6 @@ int main()
                 break;
             case 2:
                 DicoMenu(startup);
-                break;
-            case 3:
-                //CleanDico(startup);
                 break;
         }
     }while (1);

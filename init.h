@@ -1,6 +1,8 @@
 #ifndef INIT_H_INCLUDED
 #define INIT_H_INCLUDED
 
+#define INIT_CAPACITY 50
+
 struct Library {
 	char letter; //Première lettre des mots du tableau
 	int capacity;
@@ -33,6 +35,10 @@ void FillDico(Program*);
 void CountTotalWords(Program*);
 void ToLowerCase(char*);
 void SortDico(Program*, int);
+int CheckIfExists(Program*, int, char*);
+void WriteOnFile(Program*);
+void OverrideCapacity(Program*, int);
+void CleanDico(Program*);
 
 //Prototypes gestFile.c
 void CreateFile(Program*);

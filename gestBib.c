@@ -10,10 +10,15 @@ void InitLibrary(Program* startup){
 	int i;
 	for (i = 0; i < 26; i++) {
 		startup->dictionary[i].letter = alphabet[i];
-		startup->dictionary[i].capacity = 30000;
+		startup->dictionary[i].capacity = INIT_CAPACITY;
 		startup->dictionary[i].size = 0;
 		startup->dictionary[i].words = malloc(sizeof(char*) * startup->dictionary[i].capacity);
 	}
+}
+
+void OverrideCapacity(Program* startup, int indexLib){
+    startup->dictionary[indexLib].capacity *= 2;
+    startup->dictionary[indexLib].words = realloc(startup->dictionary[indexLib].words, sizeof(char*) * startup->dictionary[indexLib].capacity);
 }
 
 //Fonction de comparaison pour qsort()
@@ -38,15 +43,20 @@ void FillDicoFromFile(Program* startup){
         ToLowerCase(word);
         int indexLib = word[0] - 97;
         int sizeLib = startup->dictionary[indexLib].size;
-        startup->dictionary[indexLib].words[sizeLib] = word;
-        startup->dictionary[indexLib].size++;
+        if(sizeLib == (startup->dictionary[indexLib].capacity - 3)){
+            OverrideCapacity(startup, indexLib);
+        }
+        if(CheckIfExists(startup, indexLib, word) == 0){
+            startup->dictionary[indexLib].words[sizeLib] = word;
+            startup->dictionary[indexLib].size++;
+        }
     }
     CountTotalWords(startup);
     int i;
     for(i = 0; i < 26; i++){
         SortDico(startup, i);
     }
-    rewind(startup->f);
+    WriteOnFile(startup);
 }
 
 //Remplit le tableau via la saisie utilisateur
@@ -59,23 +69,35 @@ void FillDico(Program* startup){
     ToLowerCase(wordIns);
     int indexLib = wordIns[0] - 97;
     int sizeLib = startup->dictionary[indexLib].size;
+    if(CheckIfExists(startup, indexLib, wordIns) == 1){
+        system("cls");
+        printf("/!\\ : Le mot \"%s\" existe deja.\n\n", wordIns);
+        return;
+    }
     startup->dictionary[indexLib].words[sizeLib] = wordIns;
     startup->dictionary[indexLib].size++;
     CountTotalWords(startup);
     SortDico(startup, indexLib);
-    fclose(startup->f);
-    fopen(startup->loadedFileName, "w+");
-    int i;
-    for(i = 0; i < 26; i++){
+    WriteOnFile(startup);
+    system("cls");
+    printf("-- Le mot \"%s\" a ete insere dans le dictionnaire. --\n\n", wordIns);
+    free(wordIns);
+}
+
+//Nettoie les valeurs du tableau
+void CleanDico(Program* startup){
+    int i = 0;
+    for(; i < 26; i++){
         int j;
         for(j = 0; j < startup->dictionary[i].size; j++){
-            fprintf(startup->f, "%s\n", startup->dictionary[i].words[j]);
+            free(startup->dictionary[i].words[j]);
         }
+        free(startup->dictionary[i].words);
+        startup->dictionary[i].size = 0;
+        startup->dictionary[i].capacity = INIT_CAPACITY;
+        startup->dictionary[i].words = malloc(sizeof(char*) * startup->dictionary[i].capacity);
     }
-    fclose(startup->f);
-    fopen(startup->loadedFileName, "a+");
-    rewind(startup->f);
-    free(wordIns);
+    startup->totalWords = 0;
 }
 
 //Transforme les majuscules en minuscules
@@ -95,4 +117,33 @@ void CountTotalWords(Program* startup){
         total += startup->dictionary[i].size;
     }
     startup->totalWords = total;
+}
+
+void WriteOnFile(Program* startup){
+    fclose(startup->f);
+    fopen(startup->loadedFileName, "w+");
+    int i;
+    for(i = 0; i < 26; i++){
+        int j;
+        for(j = 0; j < startup->dictionary[i].size; j++){
+            if(i == 0 && j == 0){
+                fprintf(startup->f, "%s", startup->dictionary[i].words[j]);
+                continue;
+            }
+            fprintf(startup->f, "\n%s", startup->dictionary[i].words[j]);
+        }
+    }
+    fclose(startup->f);
+    fopen(startup->loadedFileName, "a+");
+    rewind(startup->f);
+}
+
+int CheckIfExists(Program* startup, int indexLib, char* wordToCheck){
+    int i;
+    for(i = 0; i < startup->dictionary[indexLib].size;i++){
+        if(strcmp(startup->dictionary[indexLib].words[i], wordToCheck) == 0){
+            return 1;
+        }
+    }
+    return 0;
 }
