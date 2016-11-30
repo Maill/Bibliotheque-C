@@ -19,21 +19,21 @@
 	<string.h>
 	"init.h"
 
-1480536393 source:c:\users\nicolas\documents\codeblocks projects\bibliotheque-c\gestbib.c
+1480544104 source:c:\users\nicolas\documents\codeblocks projects\bibliotheque-c\gestbib.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"init.h"
 
-1480536100 c:\users\nicolas\documents\codeblocks projects\bibliotheque-c\init.h
+1480546349 c:\users\nicolas\documents\codeblocks projects\bibliotheque-c\init.h
 
-1480536387 source:c:\users\nicolas\documents\codeblocks projects\bibliotheque-c\gestfile.c
+1480544540 source:c:\users\nicolas\documents\codeblocks projects\bibliotheque-c\gestfile.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"init.h"
 
-1480532777 source:c:\users\nicolas\documents\codeblocks projects\bibliotheque-c\main.c
+1480545051 source:c:\users\nicolas\documents\codeblocks projects\bibliotheque-c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

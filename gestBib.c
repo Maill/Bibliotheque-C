@@ -3,6 +3,10 @@
 #include <string.h>
 #include "init.h"
 
+///////////////////////////////////////////////////////////////////////////////
+///////////////////// "Constructeur" de la structure //////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
 //Initialisation du tableau de la bibliotheque
 void InitLibrary(Program* startup){
 	char alphabet[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
@@ -16,26 +20,15 @@ void InitLibrary(Program* startup){
 	}
 }
 
-void OverrideCapacity(Program* startup, int indexLib){
-    startup->dictionary[indexLib].capacity *= 2;
-    startup->dictionary[indexLib].words = realloc(startup->dictionary[indexLib].words, sizeof(char*) * startup->dictionary[indexLib].capacity);
-}
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-//Fonction de comparaison pour qsort()
-static int compare(const void *a, const void *b){
-   //Définie des pointeurs type et initialise avec les paramètres
-   const char *pa = *(const char**)a;
-   const char *pb = *(const char**)b;
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////// Traitement des fichiers /////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-   //Évalue et retourne l'état de l'évaluation (tri croissant)
-   return strcmp(pa, pb);
-}
-
-void SortDico(Program* startup, int indexLib){
-    qsort(startup->dictionary[indexLib].words, startup->dictionary[indexLib].size, sizeof(char*), compare);
-}
-
-//Remplit le tableau lors de l'initialisation d'un fichier
+//Remplit le tableau lors de l'initialisation d'un fichier dictionnaire
 void FillDicoFromFile(Program* startup){
     if(IsFileEmpty(startup->f) == 1){
         CountTotalWords(startup);
@@ -63,6 +56,32 @@ void FillDicoFromFile(Program* startup){
     WriteOnFile(startup);
 }
 
+//Remplit le tableau via la saisie utilisateur
+void FillDico(Program* startup){
+    char* wordIns = malloc(sizeof(char) * 30);
+    system("cls");
+    printf("           ------- Dictionnaire C -------\n------- Gestion des fichiers dictionnaire -------\n     ------- Inserer un mot dans le dictionnaire -------\n\n");
+    printf("Mot a inserer : ");
+    scanf("%s", wordIns);
+    ToLowerCase(wordIns);
+    int indexLib = wordIns[0] - 97;
+    int sizeLib = startup->dictionary[indexLib].size;
+    if(CheckIfExists(startup, indexLib, wordIns) == 1){
+        system("cls");
+        printf("/!\\ : Le mot \"%s\" existe deja.\n\n", wordIns);
+        return;
+    }
+    startup->dictionary[indexLib].words[sizeLib] = wordIns;
+    startup->dictionary[indexLib].size++;
+    CountTotalWords(startup);
+    SortDico(startup, indexLib);
+    WriteOnFile(startup);
+    system("cls");
+    printf("-- Le mot \"%s\" a ete insere dans le dictionnaire. --\n\n", wordIns);
+    free(wordIns);
+}
+
+//Remplit le tableau à l'aide d'un texte
 void FillDicoFromTextFile(Program* startup){
     char* nameOutExt;
     while(!feof(startup->f) && !ferror(startup->f)){
@@ -91,29 +110,40 @@ void FillDicoFromTextFile(Program* startup){
 
 }
 
-//Remplit le tableau via la saisie utilisateur
-void FillDico(Program* startup){
-    char* wordIns = malloc(sizeof(char) * 30);
-    system("cls");
-    printf("           ------- Dictionnaire C -------\n------- Gestion des fichiers dictionnaire -------\n     ------- Inserer un mot dans le dictionnaire -------\n\n");
-    printf("Mot a inserer : ");
-    scanf("%s", wordIns);
-    ToLowerCase(wordIns);
-    int indexLib = wordIns[0] - 97;
-    int sizeLib = startup->dictionary[indexLib].size;
-    if(CheckIfExists(startup, indexLib, wordIns) == 1){
-        system("cls");
-        printf("/!\\ : Le mot \"%s\" existe deja.\n\n", wordIns);
-        return;
+//Ecrit le tableau en mémoire dans le fichier dictionnaire
+void WriteOnFile(Program* startup){
+    fclose(startup->f);
+    fopen(startup->loadedFileName, "w+");
+    int i;
+    int first = 0;
+    for(i = 0; i < 26; i++){
+        int j;
+        for(j = 0; j < startup->dictionary[i].size; j++){
+            if(first == 0){
+                fprintf(startup->f, "%s", startup->dictionary[i].words[j]);
+                first = 1;
+                continue;
+            }
+            fprintf(startup->f, "\n%s", startup->dictionary[i].words[j]);
+        }
     }
-    startup->dictionary[indexLib].words[sizeLib] = wordIns;
-    startup->dictionary[indexLib].size++;
-    CountTotalWords(startup);
-    SortDico(startup, indexLib);
-    WriteOnFile(startup);
-    system("cls");
-    printf("-- Le mot \"%s\" a ete insere dans le dictionnaire. --\n\n", wordIns);
-    free(wordIns);
+    fclose(startup->f);
+    fopen(startup->loadedFileName, "a+");
+    rewind(startup->f);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////// Operations sur tableaux /////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+//Allocation dynamique de la memoire des tableaux
+void OverrideCapacity(Program* startup, int indexLib){
+    startup->dictionary[indexLib].capacity *= 2;
+    startup->dictionary[indexLib].words = realloc(startup->dictionary[indexLib].words, sizeof(char*) * startup->dictionary[indexLib].capacity);
 }
 
 //Nettoie les valeurs du tableau
@@ -142,36 +172,7 @@ void ToLowerCase(char* word){
     }
 }
 
-void CountTotalWords(Program* startup){
-    int total = 0;
-    int i;
-    for(i = 0; i < 26; i++){
-        total += startup->dictionary[i].size;
-    }
-    startup->totalWords = total;
-}
-
-void WriteOnFile(Program* startup){
-    fclose(startup->f);
-    fopen(startup->loadedFileName, "w+");
-    int i;
-    int first = 0;
-    for(i = 0; i < 26; i++){
-        int j;
-        for(j = 0; j < startup->dictionary[i].size; j++){
-            if(first == 0){
-                fprintf(startup->f, "%s", startup->dictionary[i].words[j]);
-                first = 1;
-                continue;
-            }
-            fprintf(startup->f, "\n%s", startup->dictionary[i].words[j]);
-        }
-    }
-    fclose(startup->f);
-    fopen(startup->loadedFileName, "a+");
-    rewind(startup->f);
-}
-
+//Verifie si un mot existe deja dans les tableaux
 int CheckIfExists(Program* startup, int indexLib, char* wordToCheck){
     int i;
     for(i = 0; i < startup->dictionary[indexLib].size;i++){
@@ -182,6 +183,17 @@ int CheckIfExists(Program* startup, int indexLib, char* wordToCheck){
     return 0;
 }
 
+//Compte le nombre total de mots
+void CountTotalWords(Program* startup){
+    int total = 0;
+    int i;
+    for(i = 0; i < 26; i++){
+        total += startup->dictionary[i].size;
+    }
+    startup->totalWords = total;
+}
+
+//Fonction de recherche d'un mot
 void SearchWord(Program* startup){
     char* wordSearch = malloc(sizeof(char) * 30);
     system("cls");
@@ -199,3 +211,33 @@ void SearchWord(Program* startup){
     }
     free(wordSearch);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////////// Tri sur tableaux /////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+//Fonction de comparaison pour qsort()
+//Note : cette fonction consiste a comparer 2 mots selon leurs poids
+// ==> Grossierement : cela nous evite de calculer la somme du mot et de le
+//      comparer a un autre mot
+static int compare(const void *a, const void *b){
+   //Définie des pointeurs type et initialise avec les paramètres
+   const char *pa = *(const char**)a;
+   const char *pb = *(const char**)b;
+
+   //Évalue et retourne l'état de l'évaluation (tri croissant)
+   return strcmp(pa, pb);
+}
+
+//Trie les tableaux dans l'ordre croissant
+void SortDico(Program* startup, int indexLib){
+    qsort(startup->dictionary[indexLib].words, startup->dictionary[indexLib].size, sizeof(char*), compare);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////

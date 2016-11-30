@@ -3,6 +3,11 @@
 #include <string.h>
 #include "init.h"
 
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////// Gestion des fichiers ///////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+//Cree un fichier dictionnaire
 void CreateFile(Program* startup){
     startup->loadedFileName = malloc(sizeof(char) * 100);
     system("cls");
@@ -15,6 +20,7 @@ void CreateFile(Program* startup){
     system("cls");
 }
 
+//Charge un fichier dictionnaire en mémoire
 void LoadFile(Program* startup){
     char* fileName = malloc(sizeof(char) * 100);
     system("cls");
@@ -43,6 +49,7 @@ void LoadFile(Program* startup){
     system("cls");
 }
 
+//Supprime du disque un fichier dictionnaire
 void DeleteFile(Program* startup){
     system("cls");
     char* nameFile = malloc(sizeof(char) * 100);
@@ -96,6 +103,7 @@ void DeleteFile(Program* startup){
     return;
 }
 
+//Cree un fichier dictionnaire en fonction d'un texte dans un fichier .txt
 void BuildALibFromText(Program* startup){
     char* fileName = malloc(sizeof(char) * 100);
     system("cls");
@@ -123,7 +131,12 @@ void BuildALibFromText(Program* startup){
     system("cls");
 }
 
+//Verifie si le fichier est vide
 int IsFileEmpty(FILE *file){
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
     fseek(file, 0, SEEK_END);
     if (ftell(file) == 0){
         rewind(file);
