@@ -43,7 +43,6 @@ void LoadFile(Program* startup){
     system("cls");
 }
 
-//a retravailler
 void DeleteFile(Program* startup){
     system("cls");
     char* nameFile = malloc(sizeof(char) * 100);
@@ -58,21 +57,21 @@ void DeleteFile(Program* startup){
         return;
     }else{
         fclose(checkForDel);
-        char choice = 'z';
-        while(choice != 111 || choice != 110){
+        char choice;
+        do{
             system("cls");
             printf("           ------- Dictionnaire C -------\n------- Gestion des fichiers dictionnaire -------\n    ------- Supprimer un dictionnaire -------\n\n");
-            printf("%c", choice);
             if(startup->loadedFileName != NULL && strcmp(startup->loadedFileName, nameFile) == 0){
                 printf("Etes-vous sur de vouloir supprimer ce fichier sur lequel vous etes? (o / n) : ");
             }else{
                 printf("Etes-vous sur de vouloir supprimer ce fichier? (o / n) : ");
             }
+            getchar();
             scanf("%c", &choice);
-        }
+        }while(choice != 'o' && choice != 'n' && choice != 'O' && choice != 'N');
         switch(choice){
             case 'o':
-                if(strcmp(startup->loadedFileName, nameFile) == 0){
+                if(startup->loadedFileName != NULL && strcmp(startup->loadedFileName, nameFile) == 0){
                     CleanDico(startup);
                     fclose(startup->f);
                     startup->f = NULL;
