@@ -44,7 +44,7 @@ void FileMenu(Program* startup){
     int choice;
     system("cls");
     printf("     ------- Dictionnaire C -------\n------- Gestion des dictionnaires -------\n\n");
-    printf("1. Creer un dictionnaire\n2. Charger un dictionnaire\n3. Supprimer un dictionnaire\nChoix : ");
+    printf("1. Creer un dictionnaire\n2. Charger un dictionnaire\n3. Supprimer un dictionnaire\n4. Creer un dictionnaire a partir d'un texte\nChoix : ");
     scanf("%i", &choice);
     switch(choice){
         case 1:
@@ -55,6 +55,9 @@ void FileMenu(Program* startup){
             break;
         case 3:
             DeleteFile(startup);
+            break;
+        case 4:
+            BuildALibFromText(startup);
             break;
     }
 }

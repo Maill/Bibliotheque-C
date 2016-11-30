@@ -63,6 +63,34 @@ void FillDicoFromFile(Program* startup){
     WriteOnFile(startup);
 }
 
+void FillDicoFromTextFile(Program* startup){
+    char* nameOutExt;
+    while(!feof(startup->f) && !ferror(startup->f)){
+        char* word = malloc(sizeof(char) * 30);
+        fscanf(startup->f, "%30[a-zA-Z-']%*[^a-zA-Z'-]", word);
+        ToLowerCase(word);
+        int indexLib = word[0] - 97;
+        int sizeLib = startup->dictionary[indexLib].size;
+        if(sizeLib == (startup->dictionary[indexLib].capacity - 3)){
+            OverrideCapacity(startup, indexLib);
+        }
+        if(CheckIfExists(startup, indexLib, word) == 0){
+            startup->dictionary[indexLib].words[sizeLib] = word;
+            startup->dictionary[indexLib].size++;
+        }
+    }
+    nameOutExt = strtok(startup->loadedFileName, ".");
+    strcat(nameOutExt, ".dico");
+    startup->loadedFileName = nameOutExt;
+    CountTotalWords(startup);
+    int i;
+    for(i = 0; i < 26; i++){
+        SortDico(startup, i);
+    }
+    WriteOnFile(startup);
+
+}
+
 //Remplit le tableau via la saisie utilisateur
 void FillDico(Program* startup){
     char* wordIns = malloc(sizeof(char) * 30);

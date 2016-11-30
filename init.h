@@ -31,6 +31,7 @@ void DicoMenu(Program*);
 void InitLibrary(Program*);
 void FillDicoFromFile(Program*);
 void FillDico(Program*);
+void FillDicoFromTextFile(Program*);
 //  - Lib's operations
 void CountTotalWords(Program*);
 void ToLowerCase(char*);
@@ -45,6 +46,7 @@ void SearchWord(Program*);
 void CreateFile(Program*);
 void LoadFile(Program*);
 void DeleteFile(Program*);
+void BuildALibFromText(Program*);
 int IsFileEmpty(FILE*);
 
 #endif // INIT_H_INCLUDED

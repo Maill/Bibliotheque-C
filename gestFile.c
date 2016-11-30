@@ -96,6 +96,33 @@ void DeleteFile(Program* startup){
     return;
 }
 
+void BuildALibFromText(Program* startup){
+    char* fileName = malloc(sizeof(char) * 100);
+    system("cls");
+    printf("           ------- Dictionnaire C -------\n------- Gestion des fichiers dictionnaire -------\n     ------- Charger un dictionnaire -------\n\n");
+    printf("Nom du fichier : ");
+    scanf("%s", fileName);
+    strcat(fileName, ".txt");
+    FILE* f = fopen(fileName, "r+");
+    if(f == NULL){
+        if(startup->f != NULL){
+            system("cls");
+            printf("/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
+            return;
+        }
+        system("cls");
+        printf("/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
+        fclose(f);
+        return;
+    }
+    fclose(f);
+    startup->loadedFileName = fileName;
+    startup->f = fopen(startup->loadedFileName, "a+");
+    rewind(startup->f);
+    FillDicoFromTextFile(startup);
+    system("cls");
+}
+
 int IsFileEmpty(FILE *file){
     fseek(file, 0, SEEK_END);
     if (ftell(file) == 0){
