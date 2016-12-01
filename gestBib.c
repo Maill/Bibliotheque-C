@@ -34,6 +34,9 @@ void FillDicoFromFile(Program* startup){
         CountTotalWords(startup);
         return;
     }
+    system("cls");
+    printf("           ------- Dictionnaire C -------\n------- Gestion des fichiers dictionnaire -------\n     ------- Charger un dictionnaire -------\n\n");
+    printf("Chargement en cours, veuillez patienter ...");
     while(!feof(startup->f) && !ferror(startup->f)){
         char* word = malloc(sizeof(char) * 30);
         fscanf(startup->f, "%s", word);
@@ -224,6 +227,7 @@ void SearchWord(Program* startup){
 //Note : cette fonction consiste a comparer 2 mots selon leurs poids
 // ==> Grossierement : cela nous evite de calculer la somme du mot et de le
 //      comparer a un autre mot
+//Precision : "const void" signifie que on peut donner comme arguments n'importe quel type
 static int compare(const void *a, const void *b){
    //Définie des pointeurs type et initialise avec les paramètres
    const char *pa = *(const char**)a;

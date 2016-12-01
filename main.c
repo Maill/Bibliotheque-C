@@ -30,8 +30,9 @@ int main(){
     Program* startup = InitMain();
     //Appel du "constructeur" pour initialiser les tableaux dictionnaire
     InitLibrary(startup);
+
     do{
-        int choice;
+        char choice;
         printf("------- Dictionnaire C -------\n\n");
         printf("Fichier charge : ");
         if (startup->loadedFileName == NULL) {
@@ -40,17 +41,23 @@ int main(){
             printf("%s\n", startup->loadedFileName);
         }
         printf("Nombre total de mots : %i\n\n", startup->totalWords);
-        printf("1. Fichier du dictionnaire\n2. Gestion du dictionnaire\nChoix : ");
-        scanf("%i", &choice);
+        printf("1. Fichier du dictionnaire\n2. Gestion du dictionnaire\n3. Quitter\nChoix : ");
+        scanf("%c", &choice);
         switch(choice){
-            case 1:
+            case '1':
                 FileMenu(startup);
                 break;
-            case 2:
+            case '2':
                 DicoMenu(startup);
                 break;
+            case '3':
+                return 0;
+                break;
+            default:
+                system("cls");
+                break;
         }
-    }while (1);
+    }while(1);
     return 0;
 }
 
@@ -64,25 +71,31 @@ int main(){
 
 //Menu de gestion des fichiers
 void FileMenu(Program* startup){
-    int choice;
-    system("cls");
-    printf("     ------- Dictionnaire C -------\n------- Gestion des dictionnaires -------\n\n");
-    printf("1. Creer un dictionnaire\n2. Charger un dictionnaire\n3. Supprimer un dictionnaire\n4. Creer un dictionnaire a partir d'un texte\nChoix : ");
-    scanf("%i", &choice);
-    switch(choice){
-        case 1:
-            CreateFile(startup);
-            break;
-        case 2:
-            LoadFile(startup);
-            break;
-        case 3:
-            DeleteFile(startup);
-            break;
-        case 4:
-            BuildALibFromText(startup);
-            break;
-    }
+    char choice;
+    do{
+        system("cls");
+        printf("     ------- Dictionnaire C -------\n------- Gestion des dictionnaires -------\n\n");
+        printf("1. Creer un dictionnaire\n2. Charger un dictionnaire\n3. Supprimer un dictionnaire\n4. Creer un dictionnaire a partir d'un texte\n5. Retour au menu principal\nChoix : ");
+        scanf("%c", &choice);
+        switch(choice){
+            case '1':
+                CreateFile(startup);
+                break;
+            case '2':
+                LoadFile(startup);
+                break;
+            case '3':
+                DeleteFile(startup);
+                break;
+            case '4':
+                BuildALibFromText(startup);
+                break;
+            case '5':
+                system("cls");
+                break;
+        }
+    }while(choice != '1' && choice != '2' && choice != '3' && choice != '4' && choice != '5');
+
 }
 
 //Menu de gestion du dictionnaire
@@ -92,19 +105,24 @@ void DicoMenu(Program* startup){
         printf("/!\\ : Aucun fichier dictionnaire charge, veuillez charger un fichier dictionnaire !\n\n");
         return;
     }
-    int choice;
-    system("cls");
-    printf("     ------- Dictionnaire C -------\n------- Gestion des dictionnaires -------\n\n");
-    printf("1. Inserer un mot dans le dictionnaire\n2. Rechercher un mot dans le dictionnaire\nChoix : ");
-    scanf("%i", &choice);
-    switch(choice){
-        case 1:
-            FillDico(startup);
-            break;
-        case 2:
-            SearchWord(startup);
-            break;
-    }
+    char choice;
+    do{
+        system("cls");
+        printf("     ------- Dictionnaire C -------\n------- Gestion des dictionnaires -------\n\n");
+        printf("1. Inserer un mot dans le dictionnaire\n2. Rechercher un mot dans le dictionnaire\n3. Retour au menu principal\nChoix : ");
+        scanf("%c", &choice);
+        switch(choice){
+            case '1':
+                FillDico(startup);
+                break;
+            case '2':
+                SearchWord(startup);
+                break;
+            case '3':
+                system("cls");
+                break;
+        }
+    }while(choice != '1' && choice != '2' && choice != '3');
 }
 
 ///////////////////////////////////////////////////////////////////////////////

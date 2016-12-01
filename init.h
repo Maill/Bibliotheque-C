@@ -8,7 +8,7 @@
 //Structure pour rangement ordonne des mots en memoire.
 //Le but etant de faciliter l'acces des mots par rapport a un fichier.
 //Cela permet de pouvoir chercher/ajouter/trier un mot sans a avoir a traiter un fichier entier et/ou tableau entier
-#define INIT_CAPACITY 50 //Capacite de base du tableau de mot
+#define INIT_CAPACITY 50 //Capacite de base du tableau de mots
 struct Library {
 	char letter; //1 lettre de l'alphabet qui determine la place d'un mot dans sa structure approprie
 	int capacity;
@@ -39,6 +39,7 @@ typedef struct Program Program;
 //Prototypes main.c
 void FileMenu(Program*);
 void DicoMenu(Program*);
+Program* InitMain();
 
 //Prototypes gestBib.c
 //  - Load Lib
