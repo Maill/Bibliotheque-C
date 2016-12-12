@@ -32,11 +32,11 @@ void LoadFile(Program* startup){
     if(f == NULL){
         if(startup->f != NULL){
             system("cls");
-            printf("/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
+            sprintf(startup->log, "/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
             return;
         }
         system("cls");
-        printf("/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
+        sprintf(startup->log, "/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
         fclose(f);
         return;
     }
@@ -60,7 +60,7 @@ void DeleteFile(Program* startup){
     FILE* checkForDel = fopen(nameFile, "r");
     if (checkForDel == NULL){
         system("cls");
-        printf("/!\\ : Le fichier dictionnaire n'existe pas.\n\n");
+        sprintf(startup->log, "/!\\ : Le fichier dictionnaire n'existe pas.\n\n");
         return;
     }else{
         fclose(checkForDel);
@@ -91,14 +91,14 @@ void DeleteFile(Program* startup){
                 break;
             case 'n':
                 system("cls");
-                printf("/!\\ : Operation annulee.\n\n");
+                sprintf(startup->log, "/!\\ : Operation annulee.\n\n");
                 return;
                 break;
         }
 
     }
     system("cls");
-    printf("/!\\ : Le fichier dictionnaire a ete detruit.\n\n");
+    sprintf(startup->log, "/!\\ : Le fichier dictionnaire a ete detruit.\n\n");
     free(nameFile);
     return;
 }
@@ -115,11 +115,11 @@ void BuildALibFromText(Program* startup){
     if(f == NULL){
         if(startup->f != NULL){
             system("cls");
-            printf("/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
+            sprintf(startup->log, "/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
             return;
         }
         system("cls");
-        printf("/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
+        sprintf(startup->log, "/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
         fclose(f);
         return;
     }

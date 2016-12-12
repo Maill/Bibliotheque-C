@@ -25,6 +25,7 @@ struct Program {
 	FILE* f; //Pointeur du fichier
 	Lib* dictionary; //Tableau de "Library"
 	int totalWords; //Nombre de mots total
+	char* log;
 };
 typedef struct Program Program;
 

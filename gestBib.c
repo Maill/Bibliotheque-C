@@ -71,7 +71,7 @@ void FillDico(Program* startup){
     int sizeLib = startup->dictionary[indexLib].size;
     if(CheckIfExists(startup, indexLib, wordIns) == 1){
         system("cls");
-        printf("/!\\ : Le mot \"%s\" existe deja.\n\n", wordIns);
+        sprintf(startup->log, "/!\\ : Le mot \"%s\" existe deja.\n\n", wordIns);
         return;
     }
     startup->dictionary[indexLib].words[sizeLib] = wordIns;
@@ -80,7 +80,7 @@ void FillDico(Program* startup){
     SortDico(startup, indexLib);
     WriteOnFile(startup);
     system("cls");
-    printf("-- Le mot \"%s\" a ete insere dans le dictionnaire. --\n\n", wordIns);
+    sprintf(startup->log, "-- Le mot \"%s\" a ete insere dans le dictionnaire. --\n\n",wordIns);
     free(wordIns);
 }
 
@@ -207,10 +207,10 @@ void SearchWord(Program* startup){
     int indexLib = wordSearch[0] - 97;
     if(CheckIfExists(startup, indexLib, wordSearch) == 1){
         system("cls");
-        printf("-- Le mot \"%s\" est dans le dictionnaire. --\n\n", wordSearch);
+        sprintf(startup->log, "-- Le mot \"%s\" est dans le dictionnaire. --\n\n", wordSearch);
     }else{
         system("cls");
-        printf("-- Le mot \"%s\" n'existe pas dans le dictionnaire. --\n\n", wordSearch);
+        sprintf(startup->log, "-- Le mot \"%s\" n'existe pas dans le dictionnaire. --\n\n", wordSearch);
     }
     free(wordSearch);
 }
