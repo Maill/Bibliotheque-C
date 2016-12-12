@@ -30,11 +30,6 @@ void LoadFile(Program* startup){
     strcat(fileName, ".dico");
     FILE* f = fopen(fileName, "r+");
     if(f == NULL){
-        if(startup->f != NULL){
-            system("cls");
-            sprintf(startup->log, "/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
-            return;
-        }
         system("cls");
         sprintf(startup->log, "/!\\ : Fichier non trouve, veuillez reessayer.\n\n");
         fclose(f);
