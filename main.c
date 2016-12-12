@@ -10,7 +10,7 @@
 
 //Initialisation de la structure maitre
 Program* InitMain(){
-	Program* startup = malloc(sizeof(Lib) * 1);
+	Program* startup = malloc(sizeof(Program) * 1);
 	startup->loadedFileName = NULL;
 	startup->f = NULL;
 	startup->totalWords = 0;
@@ -32,7 +32,7 @@ int main(){
     InitLibrary(startup);
 
     do{
-        char choice;
+        int choice;
         printf("------- Dictionnaire C -------\n\n");
         printf("Fichier charge : ");
         if (startup->loadedFileName == NULL) {
@@ -42,15 +42,15 @@ int main(){
         }
         printf("Nombre total de mots : %i\n\n", startup->totalWords);
         printf("1. Fichier du dictionnaire\n2. Gestion du dictionnaire\n3. Quitter\nChoix : ");
-        scanf("%c", &choice);
+        scanf("%i", &choice);
         switch(choice){
-            case '1':
+            case 1:
                 FileMenu(startup);
                 break;
-            case '2':
+            case 2:
                 DicoMenu(startup);
                 break;
-            case '3':
+            case 3:
                 return 0;
                 break;
             default:
@@ -107,7 +107,6 @@ void DicoMenu(Program* startup){
     }
     char choice;
     do{
-        system("cls");
         printf("     ------- Dictionnaire C -------\n------- Gestion des dictionnaires -------\n\n");
         printf("1. Inserer un mot dans le dictionnaire\n2. Rechercher un mot dans le dictionnaire\n3. Retour au menu principal\nChoix : ");
         scanf("%c", &choice);
